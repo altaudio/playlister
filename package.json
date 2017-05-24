@@ -19,11 +19,12 @@
     "start:watch": "nodemon -w ./scripts --exec yarn start",
     "start:built": "node dist/main.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "abs-80": "babel-node scripts/scrapers/absolute80sScraper.js"
+    "scraper": "babel-node scripts/scraperWatch.js"
   },
   "license": "ISC",
   "dependencies": {
     "firebase-admin": "^5.0.0",
+    "later": "^1.2.0",
     "lodash": "^4.2.1",
     "scraperjs": "^1.2.0"
   },
