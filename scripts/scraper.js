@@ -1,4 +1,5 @@
 import scraperjs from 'scraperjs'
+import moment from 'moment'
 import writeToFirebase from './writeToFirebase'
 
 export default (url, station, titleSelector, artistSelector) => {
@@ -6,7 +7,8 @@ export default (url, station, titleSelector, artistSelector) => {
     .scrape(($) => {
       return {
         title: $(titleSelector).first().text(),
-        artist: $(artistSelector).first().text()
+        artist: $(artistSelector).first().text(),
+        timeStamp: moment().format('DDHmmss')
       }
     })
     .then((track) => {
