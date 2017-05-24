@@ -1,7 +1,7 @@
 import later from 'later'
 import scraper from './scraper.js'
 
-const trackWatcher = (minutes, scrape, stationUrl, stationName, trackSelector, artistSelector) => {
+const trackWatcher = (minuteInterval, scrape, stationUrl, stationName, trackSelector, artistSelector) => {
   const schedule = later.parse.recur().every(minutes).minute()
   later.setInterval(
     () => { scrape(stationUrl, stationName, trackSelector, artistSelector) },
