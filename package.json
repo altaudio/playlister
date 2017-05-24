@@ -14,7 +14,7 @@
     "build": "yarn run clean && mkdir dist && babel scripts --out-dir dist --source-maps",
     "lint:js": "eslint ./scripts --ext=js",
     "postinstall": "yarn check:node",
-    "start": "babel-node scripts/main.js",
+    "start": "babel-node scripts/bot.js",
     "start:debug": "yarn start -- --inspect",
     "start:watch": "nodemon -w ./scripts --exec yarn start",
     "start:built": "node dist/main.js",
@@ -24,8 +24,10 @@
   "license": "ISC",
   "dependencies": {
     "firebase-admin": "^5.0.0",
+    "http": "^0.0.0",
     "later": "^1.2.0",
     "lodash": "^4.2.1",
+    "messenger-bot": "^2.4.0",
     "moment": "^2.18.1",
     "scraperjs": "^1.2.0"
   },
