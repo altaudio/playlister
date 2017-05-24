@@ -9,4 +9,5 @@ const trackWatcher = (minuteInterval, scrape, stationUrl, stationName, trackSele
   )
 }
 
+trackWatcher(3, scraper, 'https://absoluteradio.co.uk/90s/music/', 'absolute90s', '.song-title a', '.song-artist')
 trackWatcher(3, scraper, 'https://absoluteradio.co.uk/80s/music/', 'absolute80s', '.song-title a', '.song-artist')
