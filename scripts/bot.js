@@ -5,10 +5,10 @@ bot.on('error', (error) => {
   console.log(error.message)
 })
 
-bot.on('message', (payload, reply) => {
+bot.on('message', (payload) => {
   const message = payload.message.text
   const senderId = payload.sender.id
-  bot.sendMessage(senderId, {text : message})
+  bot.sendMessage(senderId, { text: message })
 })
 
 http.createServer(bot.middleware()).listen(3000)
