@@ -4,7 +4,6 @@ import firebase from './initialiseFirebase.js'
 import spotify from './initialiseSpotify'
 import bot from './initialiseBot.js'
 
-const emojis = [':)', 'O:)', ':*', '8-)', '<3', '(y)', '<(")']
 
 export default (facebookId, spotifyId, requestedStation) => {
   firebase.database().ref(`users/${facebookId}`).once('value')
@@ -29,7 +28,7 @@ export default (facebookId, spotifyId, requestedStation) => {
 
             return spotify.addTracksToPlaylist(spotifyId, playlistId, tracksToPlaylist)
               .then(() => {
-                bot.sendMessage(facebookId, { text: `Your playlist has been created and will be on your Spotify shortly ${emojis[_.random(_.size(emojis) - 1)]}` })
+                bot.sendMessage(facebookId, { text: 'Your playlist has been sent to Spotify!' })
               })
           })
       })
