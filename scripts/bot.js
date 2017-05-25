@@ -2,6 +2,7 @@ import http from 'http'
 import bot from './initialiseBot.js'
 import onPostback from './onPostback'
 import onRequest from './onRequest'
+import onMessage from './onMessage.js'
 
 const server = http.createServer(bot.middleware())
 
@@ -10,13 +11,7 @@ bot.on('error', (error) => {
 })
 
 bot.on('postback', onPostback)
-
-bot.on('message', (payload) => {
-  const message = payload.message.text
-  const senderId = payload.sender.id
-  bot.sendMessage(senderId, { text: message })
-})
-
+bot.on('message', onMessage)
 server.on('request', onRequest)
 
 server.listen(3000)

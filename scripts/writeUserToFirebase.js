@@ -7,7 +7,10 @@ export default (facebookUserId, response) => {
   firebase.database().ref(`/users/${facebookUserId}`).update({
     accessToken: parsedResponse.access_token,
     refreshToken: parsedResponse.refresh_token,
-    expiresIn: parsedResponse.expires_in
+    expiresIn: parsedResponse.expires_in,
+    tokenType: parsedResponse.token_type,
+    scope: parsedResponse.scope
+
   })
   .then(() => {
     bot.sendMessage(facebookUserId, { text: 'Thanks for signing in to Spotify!' })

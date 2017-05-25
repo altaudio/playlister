@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import firebase from './initialiseFirebase.js'
 
+
 const maximumNumberOfTracks = 10
 
 const removeOldestSong = (snapshot, station, reference) => {
@@ -24,7 +25,6 @@ const removeOldestSong = (snapshot, station, reference) => {
 
 export default (station, trackId, trackData) => {
   const reference = firebase.database().ref(`/stations/${station}`)
-
   reference.once('value')
   .then((snapshot) => {
     reference.update({ [trackId]: trackData })

@@ -1,6 +1,19 @@
 import scraperjs from 'scraperjs'
 import moment from 'moment'
 import writeTracksToFirebase from './writeTracksToFirebase'
+import spotify from './initialiseSpotify.js'
+
+const getSpotifyId = (station, track) => {
+  spotify.searchTracks(`track:${track.title} artist:${track.artist}`, { limit: 1 })
+    .then((data) => {
+      track.spotifyId = data.body.tracks.items[0].id
+      writeTracksToFirebase(station, track.title, track)
+      console.log(track)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+}
 
 export default (url, station, titleSelector, artistSelector) => {
   scraperjs.StaticScraper.create(url)
@@ -12,8 +25,7 @@ export default (url, station, titleSelector, artistSelector) => {
       }
     })
     .then((track) => {
-      console.log(track)
-      writeTracksToFirebase(station, track.title, track)
+      getSpotifyId(station, track)
     })
 }
 
