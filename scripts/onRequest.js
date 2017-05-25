@@ -23,11 +23,11 @@ export default (requestData) => {
        client_id: config.spotifyClientId,
        client_secret: config.spotifyClientSecret
      })
-     .end((error, response) => {
+     .end((error, accessData) => {
        if (error) {
          console.log(error)
        }
-       writeUserToFirebase(facebookUserId, response)
+       writeUserToFirebase(facebookUserId, accessData)
      })
   }
 }

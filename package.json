@@ -32,6 +32,7 @@
     "query-string": "^4.3.4",
     "scraperjs": "^1.2.0",
     "secure-random-string": "^1.0.0",
+    "spotify-web-api-node": "^2.4.0",
     "superagent": "^3.5.2"
   },
   "devDependencies": {
