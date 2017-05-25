@@ -4,5 +4,7 @@ export default {
   facebookAppSecret: '65052761b701874b2bfbc0558b889cdf',
   facebookVerifyToken: 'VERIFY_THIS_MELONFARMER',
   spotifyClientId: '20163bbbd7124ef6baaad77c60edb8ab',
-  spotifyClientSecret: 'fefba610141b4537af1e9238a6fea6ab'
+  spotifyClientSecret: 'fefba610141b4537af1e9238a6fea6ab',
+  redirectUrl: 'https://b980e2c5.ngrok.io'
 }
+

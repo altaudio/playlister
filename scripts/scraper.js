@@ -1,6 +1,6 @@
 import scraperjs from 'scraperjs'
 import moment from 'moment'
-import writeToFirebase from './writeToFirebase'
+import writeTracksToFirebase from './writeTracksToFirebase'
 
 export default (url, station, titleSelector, artistSelector) => {
   scraperjs.StaticScraper.create(url)
@@ -13,7 +13,7 @@ export default (url, station, titleSelector, artistSelector) => {
     })
     .then((track) => {
       console.log(track)
-      writeToFirebase(station, track.title, track)
+      writeTracksToFirebase(station, track.title, track)
     })
 }
 
