@@ -2,7 +2,7 @@ import _ from 'lodash'
 import firebase from './initialiseFirebase.js'
 
 
-const maximumNumberOfTracks = 10
+const maximumNumberOfTracks = 20
 
 const removeOldestSong = (snapshot, station, reference) => {
   const tracks = snapshot.val()

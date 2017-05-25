@@ -4,31 +4,38 @@ import firebase from './initialiseFirebase.js'
 import spotify from './initialiseSpotify'
 import bot from './initialiseBot.js'
 
+const emojis = [':)', 'O:)', ':*', '8-)', '<3', '(y)', '<(")']
+
 export default (facebookId, spotifyId, requestedStation) => {
   firebase.database().ref(`users/${facebookId}`).once('value')
-  .then((value) => {
-    const userAccessToken = value.val().accessToken
+  .then((user) => {
+    const userAccessToken = user.val().accessToken
     spotify.setAccessToken(userAccessToken)
 
-    return spotify.createPlaylist(spotifyId, moment().format('DDMMHHmm'), { public: false })
-      .then((data) => {
-        const playlistId = data.body.id
+    return spotify.createPlaylist(spotifyId, `${requestedStation}/${moment().format('DDMMHHmm')}`, { public: false })
+      .then((playlist) => {
+        const playlistId = playlist.body.id
 
         return firebase.database().ref(`stations/${requestedStation}`).once('value')
           .then((tracks) => {
-            const tracksFromDatabase = tracks.val()
-            const trackstoPlaylist = _.map(tracksFromDatabase, (track) => {
-              return `spotify:track:${track.spotifyId}`
+            const tracksFromStation = tracks.val()
+            const tracksToPlaylist = _.map(tracksFromStation, (track) => {
+              if (track.spotifyId) {
+                return `spotify:track:${track.spotifyId}`
+              }
+                // Curly black and kinky
+              return 'spotify:track:4SqOVebclQiYEVo63QdIux'
             })
-            return spotify.addTracksToPlaylist(spotifyId, playlistId, trackstoPlaylist)
+
+            return spotify.addTracksToPlaylist(spotifyId, playlistId, tracksToPlaylist)
               .then(() => {
-                bot.sendMessage(facebookId, { text: 'Your playlist has been created!' })
+                bot.sendMessage(facebookId, { text: `Your playlist has been created and will be on your Spotify shortly ${emojis[_.random(_.size(emojis) - 1)]}` })
               })
           })
       })
   })
   .catch((error) => {
-    console.log(error)
+    console.log(`Error: ${error}`)
     bot.sendMessage(facebookId, { text: 'Uh oh, looks like there was a problem creating your playlist :(' })
   })
 }

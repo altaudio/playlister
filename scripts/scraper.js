@@ -3,12 +3,12 @@ import moment from 'moment'
 import writeTracksToFirebase from './writeTracksToFirebase'
 import spotify from './initialiseSpotify.js'
 
-const getSpotifyId = (station, track) => {
+const addSpotifyId = (station, track) => {
   spotify.searchTracks(`track:${track.title} artist:${track.artist}`, { limit: 1 })
-    .then((data) => {
-      track.spotifyId = data.body.tracks.items[0].id
+    .then((trackData) => {
+      track.spotifyId = trackData.body.tracks.items[0].id
+
       writeTracksToFirebase(station, track.title, track)
-      console.log(track)
     })
     .catch((error) => {
       console.log(error)
@@ -25,7 +25,7 @@ export default (url, station, titleSelector, artistSelector) => {
       }
     })
     .then((track) => {
-      getSpotifyId(station, track)
+      addSpotifyId(station, track)
     })
 }
 

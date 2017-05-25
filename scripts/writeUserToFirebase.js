@@ -10,7 +10,6 @@ export default (facebookUserId, response) => {
     expiresIn: parsedResponse.expires_in,
     tokenType: parsedResponse.token_type,
     scope: parsedResponse.scope
-
   })
   .then(() => {
     bot.sendMessage(facebookUserId, { text: 'Thanks for signing in to Spotify!' })
