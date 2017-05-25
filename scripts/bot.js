@@ -1,9 +1,15 @@
 import http from 'http'
 import bot from './initialiseBot.js'
+import onPostback from './onPostback'
+import onRequest from './onRequest'
+
+const server = http.createServer(bot.middleware())
 
 bot.on('error', (error) => {
   console.log(error.message)
 })
+
+bot.on('postback', onPostback)
 
 bot.on('message', (payload) => {
   const message = payload.message.text
@@ -11,5 +17,7 @@ bot.on('message', (payload) => {
   bot.sendMessage(senderId, { text: message })
 })
 
-http.createServer(bot.middleware()).listen(3000)
+server.on('request', onRequest)
+
+server.listen(3000)
 console.log('Echo bot server running at port 3000.')

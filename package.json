@@ -29,7 +29,10 @@
     "lodash": "^4.2.1",
     "messenger-bot": "^2.4.0",
     "moment": "^2.18.1",
-    "scraperjs": "^1.2.0"
+    "query-string": "^4.3.4",
+    "scraperjs": "^1.2.0",
+    "secure-random-string": "^1.0.0",
+    "superagent": "^3.5.2"
   },
   "devDependencies": {
     "babel-cli": "^6.23.0",
