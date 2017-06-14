@@ -20,6 +20,7 @@ export default (facebookUserId, response) => {
      const spotifyId = response.body.id
 
      firebase.database().ref(`/users/${facebookUserId}`).update({
+       facebookUserId: facebookUserId,
        accessToken: parsedResponse.access_token,
        refreshToken: parsedResponse.refresh_token,
        expiresIn: parsedResponse.expires_in,
