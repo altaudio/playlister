@@ -5,13 +5,15 @@ import spotify from './initialiseSpotify'
 import bot from './initialiseBot.js'
 
 
-export default (facebookId, spotifyId, requestedStation) => {
+export default (facebookId, requestedStation) => {
   firebase.database().ref(`users/${facebookId}`).once('value')
   .then((user) => {
     const userAccessToken = user.val().accessToken
+    const userSpotifyId = user.val().spotifyId
+
     spotify.setAccessToken(userAccessToken)
 
-    return spotify.createPlaylist(spotifyId, `${requestedStation}/${moment().format('DDMMHHmm')}`, { public: false })
+    return spotify.createPlaylist(userSpotifyId, `${requestedStation}/${moment().format('DDMMHHmm')}`, { public: false })
       .then((playlist) => {
         const playlistId = playlist.body.id
 
@@ -26,7 +28,7 @@ export default (facebookId, spotifyId, requestedStation) => {
               return 'spotify:track:4SqOVebclQiYEVo63QdIux'
             })
 
-            return spotify.addTracksToPlaylist(spotifyId, playlistId, tracksToPlaylist)
+            return spotify.addTracksToPlaylist(userSpotifyId, playlistId, tracksToPlaylist)
               .then(() => {
                 bot.sendMessage(facebookId, { text: 'Your playlist has been sent to Spotify!' })
               })
