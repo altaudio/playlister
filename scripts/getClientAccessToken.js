@@ -4,7 +4,7 @@ import config from './config'
 import spotify from './initialiseSpotify'
 
 export default () => {
- request
+  request
    .post('https://accounts.spotify.com/api/token')
    .set('Content-Type', 'application/x-www-form-urlencoded')
    .send({

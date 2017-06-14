@@ -3,7 +3,7 @@ import firebase from './initialiseFirebase.js'
 import config from './config'
 
 export default (facebookUserId, refreshToken) => {
- request
+  request
    .post('https://accounts.spotify.com/api/token')
    .set('Content-Type', 'application/x-www-form-urlencoded')
    .send({

@@ -19,8 +19,7 @@
     "start:watch": "nodemon -w ./scripts --exec yarn start",
     "start:built": "node dist/main.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "scraper": "babel-node scripts/scraperWatch.js",
-    "at": "babel-node scripts/getClientAccessToken.js"
+    "scraper": "babel-node scripts/scraperWatch.js"
   },
   "license": "ISC",
   "dependencies": {

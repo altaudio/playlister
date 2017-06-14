@@ -12,7 +12,6 @@ const addSpotifyId = (station, track) => {
       } else {
         console.log(`Spotify could not find ${track.title} by ${track.artist}`)
       }
-
     })
     .catch((error) => {
       console.log(error)

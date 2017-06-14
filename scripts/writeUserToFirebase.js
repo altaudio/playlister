@@ -13,26 +13,26 @@ export default (facebookUserId, response) => {
   const accessToken = parsedResponse.access_token
 
   getSpotifyId(accessToken)
-    .end((error, response) => {
-     if (error) {
-       console.log(error)
-     }
-     const spotifyId = response.body.id
+    .end((error, returnedSpotifyId) => {
+      if (error) {
+        console.log(error)
+      }
+      const spotifyId = returnedSpotifyId.body.id
 
-     firebase.database().ref(`/users/${facebookUserId}`).update({
-       facebookUserId: facebookUserId,
-       accessToken: parsedResponse.access_token,
-       refreshToken: parsedResponse.refresh_token,
-       expiresIn: parsedResponse.expires_in,
-       tokenType: parsedResponse.token_type,
-       scope: parsedResponse.scope,
-       spotifyId: spotifyId,
+      firebase.database().ref(`/users/${facebookUserId}`).update({
+        facebookUserId: facebookUserId,
+        accessToken: parsedResponse.access_token,
+        refreshToken: parsedResponse.refresh_token,
+        expiresIn: parsedResponse.expires_in,
+        tokenType: parsedResponse.token_type,
+        scope: parsedResponse.scope,
+        spotifyId: spotifyId,
       })
       .then(() => {
         bot.sendMessage(facebookUserId, { text: 'Thanks for signing in to Spotify!' })
       })
-      .catch((error) => {
-        console.log(error)
+      .catch((addUserError) => {
+        console.log(addUserError)
         bot.sendMessage(facebookUserId, { text: 'Looks like something went wrong and ou weren\'t added to our user base :(' })
       })
     })
