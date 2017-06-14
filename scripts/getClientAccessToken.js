@@ -1,5 +1,4 @@
 import request from 'superagent'
-import firebase from './initialiseFirebase.js'
 import config from './config'
 import spotify from './initialiseSpotify'
 
@@ -16,11 +15,6 @@ export default () => {
      if (error) {
        console.log(error)
      }
-
      spotify.setAccessToken(accessToken.body.access_token)
-
-     firebase.database().ref('/application').update({
-       accessToken: accessToken.body.access_token
-     })
    })
 }
