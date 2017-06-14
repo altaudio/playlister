@@ -1,21 +1,38 @@
+import request from 'superagent'
 import firebase from './initialiseFirebase.js'
 import bot from './initialiseBot.js'
 
+const getSpotifyId = (accessToken) => {
+  return request
+   .get('https://api.spotify.com/v1/me')
+   .set('Authorization', `Bearer ${accessToken}`)
+}
+
 export default (facebookUserId, response) => {
   const parsedResponse = JSON.parse(response.text)
+  const accessToken = parsedResponse.access_token
 
-  firebase.database().ref(`/users/${facebookUserId}`).update({
-    accessToken: parsedResponse.access_token,
-    refreshToken: parsedResponse.refresh_token,
-    expiresIn: parsedResponse.expires_in,
-    tokenType: parsedResponse.token_type,
-    scope: parsedResponse.scope
-  })
-  .then(() => {
-    bot.sendMessage(facebookUserId, { text: 'Thanks for signing in to Spotify!' })
-  })
-  .catch((error) => {
-    console.log(error)
-    bot.sendMessage(facebookUserId, { text: 'Looks like something went wrong and ou weren\'t added to our user base :(' })
-  })
+  getSpotifyId(accessToken)
+    .end((error, response) => {
+     if (error) {
+       console.log(error)
+     }
+     const spotifyId = response.body.id
+
+     firebase.database().ref(`/users/${facebookUserId}`).update({
+       accessToken: parsedResponse.access_token,
+       refreshToken: parsedResponse.refresh_token,
+       expiresIn: parsedResponse.expires_in,
+       tokenType: parsedResponse.token_type,
+       scope: parsedResponse.scope,
+       spotifyId: spotifyId,
+      })
+      .then(() => {
+        bot.sendMessage(facebookUserId, { text: 'Thanks for signing in to Spotify!' })
+      })
+      .catch((error) => {
+        console.log(error)
+        bot.sendMessage(facebookUserId, { text: 'Looks like something went wrong and ou weren\'t added to our user base :(' })
+      })
+    })
 }
