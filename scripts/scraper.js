@@ -6,9 +6,12 @@ import spotify from './initialiseSpotify.js'
 const addSpotifyId = (station, track) => {
   spotify.searchTracks(`track:${track.title} artist:${track.artist}`, { limit: 1 })
     .then((trackData) => {
-      track.spotifyId = trackData.body.tracks.items[0].id
-
-      writeTracksToFirebase(station, track.title, track)
+      if (trackData.body.tracks.items[0]) {
+        track.spotifyId = trackData.body.tracks.items[0].id
+        writeTracksToFirebase(station, track.title, track)
+      } else {
+        console.log(`Spotify could not find ${track.title} by ${track.artist}`)
+      }
     })
     .catch((error) => {
       console.log(error)
@@ -25,6 +28,7 @@ export default (url, station, titleSelector, artistSelector) => {
       }
     })
     .then((track) => {
+      console.log(track)
       addSpotifyId(station, track)
     })
 }
