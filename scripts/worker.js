@@ -8,7 +8,7 @@ const scraperInterval = 3
 const refreshAccessTokenInterval = 50
 
 const stationWatcher = (stationUrl, stationName, trackSelector, artistSelector) => {
-  const schedule = later.parse.recur().every(scraperInterval).second()
+  const schedule = later.parse.recur().every(scraperInterval).minute()
   later.setInterval(
     () => { scraper(stationUrl, stationName, trackSelector, artistSelector) },
     schedule
